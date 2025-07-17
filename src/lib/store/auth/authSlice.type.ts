@@ -4,7 +4,7 @@ export interface IUserData {
   email: string;
   password: string;
 }
-export interface IRegisterdata {
+export interface IRegisterdata extends IUserData {
   username: string;
 }
 export interface IInitialState {

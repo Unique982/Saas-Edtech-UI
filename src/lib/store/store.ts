@@ -1,9 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import auth from "./auth/authSlice";
+import authSlice from "./auth/authSlice";
+
+import teacherSlice from "./teacher/teacherSlice";
+// institute realted store
+import instituteTeacherSlice from "./institute/teacher/institute-teacher-slice";
 
 const store = configureStore({
   reducer: {
-    auth: auth,
+    auth: authSlice,
+    teacher: teacherSlice,
+    instituteTeacher: instituteTeacherSlice,
   },
 });
 export default store;
