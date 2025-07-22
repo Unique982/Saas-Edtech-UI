@@ -3,8 +3,8 @@ import { Status } from "@/lib/types/type";
 export interface IInstitute {
   instituteName: string;
   instituteEmail: string;
-  institutePanNumber: string | number;
-  instituteVatNumber: string | number;
+  institutePanNumber?: string;
+  instituteVatNumber?: string;
   instituteAddress: string;
   institutePhoneNumber: string | number;
 }

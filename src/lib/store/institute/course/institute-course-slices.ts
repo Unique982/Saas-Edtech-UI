@@ -41,15 +41,19 @@ const instituteCourse = createSlice({
     },
     setDeleteCourse(state, action: PayloadAction<string>) {
       const index = state.courses.findIndex(
-        (course) => (course.id = action.payload)
+        (course) => course.id == action.payload
       );
-      state.courses.slice(index, 1);
+      if (index != -1) {
+        state.courses.slice(index, 1);
+      }
     },
     setEditCourse(state, action: PayloadAction<any>) {
       const id = action.payload.id;
       const data = action.payload.data;
-      const index = state.courses.findIndex((course) => (course.id = id));
-      state.courses[1] = data;
+      const index = state.courses.findIndex((course) => course.id == id);
+      if (index != -1) {
+        state.courses[1] = data;
+      }
     },
   },
 });

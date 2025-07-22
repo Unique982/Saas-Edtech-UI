@@ -1,8 +1,12 @@
+import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./auth/authSlice";
 
 import teacherSlice from "./teacher/teacherSlice";
 // institute realted store
+// institute
+import instituteSlice from "./institute/institute";
+// institute teacher
 import instituteTeacherSlice from "./institute/teacher/institute-teacher-slice";
 
 const store = configureStore({
@@ -10,6 +14,7 @@ const store = configureStore({
     auth: authSlice,
     teacher: teacherSlice,
     instituteTeacher: instituteTeacherSlice,
+    institute: instituteSlice,
   },
 });
 export default store;
