@@ -1,7 +1,10 @@
+import Dashboard from "@/lib/components/dashboard/Dashboard";
+import TopHeader from "@/lib/components/dashboard/Header";
+
 function InsitituteDashboard() {
   return (
     <>
-      <h1>Institute Dashboard</h1>
+      <TopHeader />
     </>
   );
 }

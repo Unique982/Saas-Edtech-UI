@@ -1,10 +1,13 @@
 export interface IUserInitialState {
   name: string | null;
-  password: string | null;
-  data: string | null;
-}
-export interface ITeacherInsitialState {
-  name: string | null;
   address: string | null;
-  phoneNumber: number | null;
+}
+
+export interface IInititalStudentData {
+  data: string;
+}
+export interface IIncomingUserPayload {
+  name: string;
+  address: string;
+  phoneNumber: number;
 }

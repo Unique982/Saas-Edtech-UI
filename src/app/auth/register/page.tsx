@@ -1,15 +1,15 @@
 "use client";
-import { Provider } from "react-redux";
+
 import { registerUser } from "@/lib/store/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hook";
-import { Status } from "@/lib/types/type";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { IRegisterData } from "./register.types";
+import { IRegisterInput } from "./register.types";
+import { Status } from "@/lib/types/type";
 
 function Register() {
   const dispatch = useAppDispatch();
-  const { status } = useAppSelector((store) => store.auth); // useAppSelector chai custom hook ho
-  const [data, setData] = useState<IRegisterData>({
+
+  const [data, setData] = useState<IRegisterInput>({
     username: "",
     email: "",
     password: "",
@@ -25,10 +25,11 @@ function Register() {
 
   // form submit handling
   const handleRegisterSubmission = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     dispatch(registerUser(data));
-    if (status === Status.SUCCESS) {
-      // api all
-    }
+    // if (status == Status.SUCCESS) {
+    //   alert("Register Successfully");
+    // }
   };
 
   return (

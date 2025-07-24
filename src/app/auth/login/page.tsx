@@ -2,12 +2,14 @@
 
 import { useAppDispatch, useAppSelector } from "@/lib/store/hook";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { ILoginData } from "./login.types";
+import { loginUser } from "@/lib/store/auth/authSlice";
 
 export default function Login() {
-  const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const [data, setData] = useState({
-    username: "",
+  const { user } = useAppSelector((store) => store.auth);
+
+  const [data, setData] = useState<ILoginData>({
     email: "",
     password: "",
   });
@@ -20,6 +22,7 @@ export default function Login() {
   };
   const handleSubmission = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(loginUser(data));
     // api call
     // dispatch(loginUser(data));
   };
@@ -34,21 +37,11 @@ export default function Login() {
             <p className="mx-auto my-4 text-center text-xl font-medium text-gray-700">
               Please sign in to your account
             </p>
-            <form className="space-y-6" method="POST">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Username
-                </label>
-                <div className="mt-1">
-                  <input
-                    name="username"
-                    type="username"
-                    placeholder="Enter Username"
-                    required
-                    className="px-2 py-3 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
-                  />
-                </div>
-              </div>
+            <form
+              onSubmit={handleSubmission}
+              className="space-y-6"
+              method="POST"
+            >
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Email
@@ -57,6 +50,7 @@ export default function Login() {
                   <input
                     name="email"
                     type="email-address"
+                    onChange={handleChange}
                     placeholder="Enter Email"
                     required
                     className="px-2 py-3 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
@@ -71,6 +65,7 @@ export default function Login() {
                   <input
                     name="password"
                     type="password"
+                    onChange={handleChange}
                     placeholder="Enter Password"
                     required
                     className="px-2 py-3 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
