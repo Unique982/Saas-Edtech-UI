@@ -1,4 +1,3 @@
-import { link } from "fs";
 import Link from "next/link";
 
 export default function SideBar() {
@@ -17,7 +16,7 @@ export default function SideBar() {
     <>
       <nav className="mt-5 px-2">
         <Link
-          href=""
+          href="/institute/dashboard"
           className="group flex items-center px-2 py-2 text-base font-medium rounded-md bg-indigo-100 text-indigo-700"
         >
           <svg

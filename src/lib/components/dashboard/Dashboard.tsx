@@ -6,7 +6,7 @@ export default function Dashboard({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <div className="flex h-screen">
+      <div className="flex h-screen overflow-auto">
         <aside className="w-64 bg-white shadow-md">
           <div className="p-4 border-b">
             <div className="flex items-center">
@@ -25,10 +25,10 @@ export default function Dashboard({
         </aside>
 
         {/* Main Content */}
-        <div className="container mx-auto p-4 md:p-6">
-          <TopHeader />
 
-          <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-8 mb-4 ">
+        <div className="container mx-auto p-4 md:p-6">
+          {/* <TopHeader /> */}
+          {/* <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-8 mb-4 ">
             <p className="text-3xl font-bold mt-4 font-serif text-black">
               Welcome to Institute Admin Dashboard
             </p>
@@ -36,6 +36,8 @@ export default function Dashboard({
               Good Evening ! Mr.Unique Neupane (Saas Project)
             </p>
           </div>
+          {children} */}
+          {children}
         </div>
       </div>
     </>
