@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   IInstituteTeacherInitailData,
   IInstituteTeacherInitialDataTeacher,
-  TeacherExpertise,
 } from "./institute-teacher-type";
 
 import { Status } from "@/lib/types/type";
 import { AppDispatch } from "../../store";
 import API from "@/lib/http";
+import APIWITHTOKEN from "@/lib/http/APIWITHTOKEN";
 const initailsState: IInstituteTeacherInitailData = {
   teacher: {
     course: {
@@ -16,11 +16,13 @@ const initailsState: IInstituteTeacherInitailData = {
       courseThumbnail: "",
     },
     teacherEmail: "",
-    teacherExperties: TeacherExpertise.Begineer,
+    teacherExperience: "",
     teacherPhoneNumber: "",
     teacherName: "",
     salary: "",
-    joinedData: "",
+    joinedDate: "",
+    teacherAddress: "",
+    teacherPhoto: null,
   },
   status: Status.LOADING,
 };
@@ -41,18 +43,42 @@ const instituteTeacherSlice = createSlice({
     ) {
       state.teacher = action.payload;
     },
+    setFetchTeacher(
+      state: IInstituteTeacherInitailData,
+      action: PayloadAction<IInstituteTeacherInitialDataTeacher>
+    ) {
+      state.teacher = action.payload;
+    },
+    //   setDeleteTeacher(
+    //     state,
+    //     action: PayloadAction<any>
+    //   ) {
+    //     const teacherId = action.payload.id;
+    //     const data = action.payload.data
+
+    //     const index = state.teacher.findIndex((teacher)=>teacher.id === teacherId);
+    //     if(index !== -1){
+    //       state.teacher[] = data;
+    //     }
   },
 });
-const { setStatus, setTeacher } = instituteTeacherSlice.actions;
+const { setStatus, setTeacher, setFetchTeacher } =
+  instituteTeacherSlice.actions;
 export default instituteTeacherSlice.reducer;
 //create method
-export function createInstituteTeacher(data: IInstituteTeacherInitailData) {
+export function createInstituteTeacher(
+  data: IInstituteTeacherInitialDataTeacher
+) {
   return async function createInstituteTeacherThunk(dispatch: AppDispatch) {
     dispatch(setStatus(Status.LOADING));
     try {
-      const response = await API.post("/institute/teacher", data);
+      const response = await APIWITHTOKEN.post("institute/teacher", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (response.status === 200) {
-        dispatch(setTeacher(response.data.data));
+        response.data.data && dispatch(setTeacher(response.data.data));
         dispatch(setStatus(Status.SUCCESS));
       } else {
         dispatch(setStatus(Status.ERROR));
@@ -69,7 +95,7 @@ export function fetchInstituteTeacher() {
   return async function fetchInstituteTeacherThunk(dispatch: AppDispatch) {
     dispatch(setStatus(Status.LOADING));
     try {
-      const response = await API.get("institute/teacher");
+      const response = await APIWITHTOKEN.get("institute/teacher");
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
         response.data.data.length > 0 &&

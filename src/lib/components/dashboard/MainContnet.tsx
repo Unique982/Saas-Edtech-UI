@@ -9,9 +9,11 @@ export default function MainContainer({
 }) {
   return (
     <>
-      <main className="flex-1 p-6 bg-gray-100">
+      <main className="flex-1 p-6 bg-gray-100 rounded-lg font-serif">
         <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>
-        <div className="mt-4 p-6 bg-white rounded-lg">{children}</div>
+        <div>
+          <p className="mt-2 p-3 bg-white  rounded-lg">{children}</p>
+        </div>
       </main>
     </>
   );

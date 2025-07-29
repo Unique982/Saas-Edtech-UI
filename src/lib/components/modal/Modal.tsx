@@ -3,7 +3,7 @@ import { createCategory } from "@/lib/store/institute/category/institute-categor
 import { ICategoryData } from "@/lib/store/institute/category/institute-category-type";
 
 import { Status } from "@/lib/types/type";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 interface ICloseModal {
   closeModal: () => void;
 }
@@ -15,6 +15,7 @@ const Modal: React.FC<ICloseModal> = ({ closeModal }) => {
     categoryName: "",
     categoryDescription: "",
   });
+
   //
   const handleCategoryChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -26,8 +27,9 @@ const Modal: React.FC<ICloseModal> = ({ closeModal }) => {
     });
   };
   ///
-  const handleSubmission = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmission = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     await dispatch(createCategory(categoryData));
     if (status === Status.SUCCESS) {
       closeModal();

@@ -1,37 +1,23 @@
 import { Status } from "@/lib/types/type";
-import { IInstituteCourseInitialData } from "./institute-course-type";
+import {
+  ICoursePostData,
+  IInstituteCourseInitialData,
+  IInstituteCourseInitialDataCourse,
+} from "./institute-course-type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { stat } from "fs";
 import { AppDispatch } from "../../store";
 import API from "@/lib/http";
 import { useAppDispatch } from "../../hook";
+import APIWITHTOKEN from "@/lib/http/APIWITHTOKEN";
 
-const initailState: IInstituteCourseInitialData = {
+const initialState: IInstituteCourseInitialData = {
   status: Status.LOADING,
-  courses: [
-    {
-      courseName: "node.js",
-      coursePrice: "900",
-      id: "1",
-      //      courseDescription: "",
-      // courseDuration: "",
-      // courseLevel: "",
-      // courseThumbnail:""
-    },
-    {
-      courseName: "node.js",
-      coursePrice: "900",
-      id: "1",
-      //      courseDescription: "",
-      // courseDuration: "",
-      // courseLevel: "",
-      // courseThumbnail:""
-    },
-  ],
+  courses: [],
 };
 const instituteCourse = createSlice({
   name: "institute-course",
-  initialState: initailState,
+  initialState,
   reducers: {
     setStatus(state, action: PayloadAction<Status>) {
       state.status = action.payload;
@@ -39,11 +25,17 @@ const instituteCourse = createSlice({
     setCourse(state, action: PayloadAction<any>) {
       state.courses = action.payload;
     },
+    setFetchCourse(
+      state,
+      action: PayloadAction<IInstituteCourseInitialDataCourse[]>
+    ) {
+      state.courses = action.payload;
+    },
     setDeleteCourse(state, action: PayloadAction<string>) {
       const index = state.courses.findIndex(
         (course) => course.id == action.payload
       );
-      if (index != -1) {
+      if (index !== -1) {
         state.courses.slice(index, 1);
       }
     },
@@ -51,24 +43,28 @@ const instituteCourse = createSlice({
       const id = action.payload.id;
       const data = action.payload.data;
       const index = state.courses.findIndex((course) => course.id == id);
-      if (index != -1) {
+      if (index !== -1) {
         state.courses[1] = data;
       }
     },
   },
 });
-const { setStatus, setCourse, setDeleteCourse, setEditCourse } =
+const { setStatus, setCourse, setDeleteCourse, setEditCourse, setFetchCourse } =
   instituteCourse.actions;
 export default instituteCourse.reducer;
 
 // create method
-export function createInstituteCourse(data: any) {
+export function createInstituteCourse(data: ICoursePostData) {
   return async function createInstituteCourse(dispatch: AppDispatch) {
     dispatch(setStatus(Status.LOADING));
     try {
-      const response = await API.post("institute/course", data);
+      const response = await APIWITHTOKEN.post("institute/course", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (response.status === 200) {
-        dispatch(setCourse(response.data.data));
+        response.data.data && dispatch(setCourse(response.data.data));
         dispatch(setStatus(Status.SUCCESS));
       } else {
         dispatch(setStatus(Status.ERROR));
@@ -80,11 +76,11 @@ export function createInstituteCourse(data: any) {
   };
 }
 // fetch method
-export function fetchInstituteCourse(data: any) {
+export function fetchInstituteCourse() {
   return async function fetchInstituteCourseThunk(dispatch: AppDispatch) {
     dispatch(setStatus(Status.LOADING));
     try {
-      const response = await API.get("institute/course", data);
+      const response = await APIWITHTOKEN.get("institute/course");
       if (response.status === 200) {
         response.data.data.length > 0 &&
           dispatch(setDeleteCourse(response.data.data));

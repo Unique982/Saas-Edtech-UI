@@ -5,7 +5,7 @@ function InstituteDashboardLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <div>
+      <div className="font-serif">
         <Dashboard>{children}</Dashboard>
       </div>
     </>

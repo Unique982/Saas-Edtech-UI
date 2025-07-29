@@ -9,21 +9,18 @@ import {
   fetchCategory,
 } from "@/lib/store/institute/category/institute-category-slice";
 import { ICategory } from "@/lib/store/institute/category/institute-category-type";
-import { Status } from "@/lib/types/type";
+
 import { useEffect, useState } from "react";
 
 export default function InstituteCategory() {
-  const { data: categories, status } = useAppSelector(
+  const { data: categories } = useAppSelector(
     (store) => store.instituteCategory
   );
   const [searchedText, setSearchedText] = useState<string>("");
   // popup model ko l;agi
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  // define garnu paro true xa ki xain like set
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(fetchCategory());
   }, []);
@@ -32,6 +29,10 @@ export default function InstituteCategory() {
   const handelCategoryDelete = (id: string) => {
     id && dispatch(deleteCategory(id));
   };
+
+  // define garnu paro true xa ki xain like set
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   // filter search
   let filterData = categories.filter(
@@ -51,8 +52,8 @@ export default function InstituteCategory() {
         <p>This is Category Manage page </p>
       </MainContainer>
       <div className="flex flex-col mt-5">
+        {isModalOpen && <Modal closeModal={closeModal} />}
         <div className="flex justify-between items-center mb-4">
-          {isModalOpen && <Modal closeModal={closeModal} />}
           <div className="relative  text-gray-500 focus-within:text-gray-900 mb-4">
             <div className="absolute inset-y-0 left-1 flex items-center pl-3 pointer-events-none ">
               <svg

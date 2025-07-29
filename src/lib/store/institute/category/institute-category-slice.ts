@@ -5,8 +5,6 @@ import {
   ICategoryInitialData,
 } from "./institute-category-type";
 import { Status } from "@/lib/types/type";
-import { setStatus } from "../../auth/authSlice";
-import { stat } from "fs";
 import { AppDispatch } from "../../store";
 import APIWITHTOKEN from "@/lib/http/APIWITHTOKEN";
 const initialState: ICategoryInitialData = {
@@ -47,14 +45,13 @@ const categorySlice = createSlice({
     },
   },
 });
-const { setAddCategory, setFetchCategory, setDeleteCategory } =
+const { setStatus, setAddCategory, setFetchCategory, setDeleteCategory } =
   categorySlice.actions;
 export default categorySlice.reducer;
 
 // api method call here
 export function createCategory(data: ICategoryData) {
   return async function createCategoryThunk(dispatch: AppDispatch) {
-    dispatch(setStatus(Status.LOADING));
     try {
       const response = await APIWITHTOKEN.post("institute/category", data);
       if (response.status === 200) {
@@ -71,7 +68,6 @@ export function createCategory(data: ICategoryData) {
 // fetch category
 export function fetchCategory() {
   return async function fetchCategoryThunk(dispatch: AppDispatch) {
-    dispatch(setStatus(Status.LOADING));
     try {
       const response = await APIWITHTOKEN.get("institute/category");
       if (response.status === 200) {

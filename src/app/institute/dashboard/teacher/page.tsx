@@ -1,6 +1,21 @@
+"use client";
 import MainContainer from "@/lib/components/dashboard/MainContnet";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hook";
+import { fetchInstituteTeacher } from "@/lib/store/institute/teacher/institute-teacher-slice";
+import { IInstituteTeacherInitialDataTeacher } from "@/lib/store/institute/teacher/institute-teacher-type";
+import { ITeacher } from "@/lib/store/teacher/teacher.type";
+import Link from "next/link";
+import { useEffect } from "react";
 
 export default function InstituteTeacher() {
+  const dispatch = useAppDispatch();
+  const { teacher: teacher, status } = useAppSelector(
+    (store) => store.instituteTeacher
+  );
+  useEffect(() => {
+    dispatch(fetchInstituteTeacher());
+  }, []);
+
   return (
     <>
       <MainContainer title="Teacher Manage">
@@ -45,7 +60,10 @@ export default function InstituteTeacher() {
               placeholder="Search Category..."
             />
           </div>
-          <button className="flex items-center gap-2 px-2 mr-3 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+          <Link
+            href="/institute/dashboard/teacher/add"
+            className="flex items-center gap-2 px-2 mr-3 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+          >
             <svg
               width="16"
               height="16"
@@ -61,7 +79,7 @@ export default function InstituteTeacher() {
               />
             </svg>
             Add New
-          </button>
+          </Link>
         </div>
       </div>
       <div className="overflow-x-auto">
@@ -99,10 +117,10 @@ export default function InstituteTeacher() {
               <tbody className="divide-y divide-gray-300">
                 <tr className="bg-white transition-all duration-500 hover:bg-gray-50">
                   <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                    Louis Vuitton
+                    {teacher.teacherName}
                   </td>
                   <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                    20010510
+                    {teacher.teacherEmail}
                   </td>
                   <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
                     Customer

@@ -1,13 +1,19 @@
 import { Status } from "@/lib/types/type";
 
-interface IInstituteCourseInitialDataCourse {
+export interface IInstituteCourseInitialDataCourse {
   courseName: string;
   coursePrice: string;
   id: string;
-  // courseDescription: string;
-  // courseDuration: string;
-  // courseLevel: string;
-  // courseThumbnail: string;
+}
+export interface ICoursePostData {
+  courseName: string;
+  coursePrice: string;
+  courseDescription: string;
+  courseLevel: string;
+  courseThumbnail: File | null;
+  categoryId: string;
+  teacherId: string;
+  courseDuration: string;
 }
 export interface IInstituteCourseInitialData {
   status: Status;

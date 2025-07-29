@@ -10,6 +10,8 @@ import instituteSlice from "./institute/institute";
 import instituteTeacherSlice from "./institute/teacher/institute-teacher-slice";
 // institute category
 import instituteCategorySlice from "./institute/category/institute-category-slice";
+// institute course
+import instituteCourseSlice from "./institute/course/institute-course-slices";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +20,7 @@ const store = configureStore({
     instituteTeacher: instituteTeacherSlice,
     institute: instituteSlice,
     instituteCategory: instituteCategorySlice,
+    instituteCourse: instituteCourseSlice,
   },
 });
 export default store;
