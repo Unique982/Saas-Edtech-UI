@@ -1,5 +1,5 @@
 "use client";
-import MainContainer from "@/lib/components/dashboard/MainContnet";
+import MainContainer from "@/lib/components/dashboard/MainContent";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hook";
 import { ICategoryInitialData } from "@/lib/store/institute/category/institute-category-type";
 import {
@@ -12,19 +12,24 @@ import { useEffect, useState } from "react";
 
 export default function InstituteCourse() {
   const dispatch = useAppDispatch();
-  const { courses } = useAppSelector((store) => store.instituteCourse);
+  const { courses, status } = useAppSelector((store) => store.instituteCourse);
   useEffect(() => {
     dispatch(fetchInstituteCourse());
+    if (courses.length === 0) {
+      dispatch(fetchInstituteCourse);
+    }
   }, []);
 
   // search content
   const [searchedText, setSearchedText] = useState<string>("");
-  const filterData = courses.filter((course) =>
+  let filterData = courses.filter((course) =>
     course.courseName.toLowerCase().includes(searchedText.toLowerCase())
   );
   // handle delete
   const handleDelete = (id: string) => {
-    id && dispatch(deleteInstituteCourse(id));
+    if (confirm("are your want delete this id")) {
+      id && dispatch(deleteInstituteCourse(id));
+    }
   };
   return (
     <>
@@ -120,6 +125,24 @@ export default function InstituteCourse() {
                   </th>
                   <th
                     scope="col"
+                    className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                  >
+                    Price
+                  </th>
+                  <th
+                    scope="col"
+                    className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                  >
+                    Duration
+                  </th>
+                  <th
+                    scope="col"
+                    className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                  >
+                    Created At
+                  </th>
+                  <th
+                    scope="col"
                     className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize rounded-t-xl"
                   >
                     Actions
@@ -127,8 +150,8 @@ export default function InstituteCourse() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-300">
-                {courses.length > 0 ? (
-                  courses.map(
+                {filterData.length > 0 ? (
+                  filterData.map(
                     (
                       course: IInstituteCourseInitialDataCourse,
                       index: number
@@ -145,7 +168,18 @@ export default function InstituteCourse() {
                             {course.courseName}
                           </td>
                           <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {course.coursePrice}
+                            {course.courseDescription}
+                          </td>
+                          <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            Rs: {course.coursePrice}
+                          </td>
+                          <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {course.courseDuration}
+                          </td>
+                          <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {new Date(course.createdAt.toString())
+                              .toLocaleDateString("en")
+                              .replace(/\//g, "-")}
                           </td>
 
                           <td className="p-5">

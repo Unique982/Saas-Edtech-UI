@@ -1,5 +1,5 @@
 "use client";
-import MainContainer from "@/lib/components/dashboard/MainContnet";
+import MainContainer from "@/lib/components/dashboard/MainContent";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hook";
 import { fetchCategory } from "@/lib/store/institute/category/institute-category-slice";
 import { createInstituteCourse } from "@/lib/store/institute/course/institute-course-slices";
@@ -12,6 +12,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 export default function AddTeacher() {
   const { courses, status } = useAppSelector((store) => store.instituteCourse);
   const { data } = useAppSelector((store) => store.instituteCategory);
+  const { teacher } = useAppSelector((store) => store.instituteTeacher);
 
   const dispatch = useAppDispatch();
   const [courseData, setCourseData] = useState<ICoursePostData>({
@@ -52,9 +53,19 @@ export default function AddTeacher() {
       dispatch(fetchCategory());
     }
   }, []);
+
+  // fetch techer
+  useEffect(() => {
+    dispatch(fetchInstituteTeacher());
+    if (teacher.length === 0) {
+      dispatch(fetchInstituteTeacher);
+    }
+  }, []);
   return (
     <>
-      <MainContainer title="Course Add"></MainContainer>
+      <MainContainer title="Course Add">
+        <p>Create course page!</p>
+      </MainContainer>
       <div className="min-h-screen container mx-auto px-2 py-5">
         <div className="flex flex-col rounded-lg shadow overflow-hidden">
           <div className="w-full px-3 py-5 md:p-7">
@@ -171,8 +182,18 @@ export default function AddTeacher() {
                     id="teacherId"
                     className="block w-full px-3 py-2 border border-gray-300 bg-white text-gray-700 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   >
-                    <option value="">-- Select a Teacher --</option>
-                    <option value="1">1</option>
+                    <option selected disabled>
+                      -- Select a Teacher --
+                    </option>
+                    {teacher.length > 0 ? (
+                      teacher.map((teacher) => (
+                        <option key={teacher.id} value={teacher.id}>
+                          {teacher.teacherName}
+                        </option>
+                      ))
+                    ) : (
+                      <option disabled>Not Found Data</option>
+                    )}
                   </select>
                 </div>
               </div>

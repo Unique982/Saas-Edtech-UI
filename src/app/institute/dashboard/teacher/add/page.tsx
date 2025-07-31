@@ -1,28 +1,36 @@
 "use client";
-import MainContainer from "@/lib/components/dashboard/MainContnet";
+
+import MainContainer from "@/lib/components/dashboard/MainContent";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hook";
 import { createCategory } from "@/lib/store/institute/category/institute-category-slice";
+import { fetchInstituteCourse } from "@/lib/store/institute/course/institute-course-slices";
 import { createInstituteTeacher } from "@/lib/store/institute/teacher/institute-teacher-slice";
-import { IInstituteTeacherInitialDataTeacher } from "@/lib/store/institute/teacher/institute-teacher-type";
+import {
+  IInstituteTeacherInitialDataTeacher,
+  IInstituteteacherPostData,
+} from "@/lib/store/institute/teacher/institute-teacher-type";
 import { Status } from "@/lib/types/type";
 
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 function AddTeacher() {
   const dispatch = useAppDispatch();
   const { courses } = useAppSelector((store) => store.instituteCourse);
+  console.log("course ma k aay ko xa" + courses);
   const { status } = useAppSelector((store) => store.instituteCategory);
-  const [teacherData, setTeacherData] =
-    useState<IInstituteTeacherInitialDataTeacher>({
-      teacherName: "",
-      teacherEmail: "",
-      teacherExperience: "",
-      teacherPhoneNumber: "",
-      joinedDate: "",
-      salary: "",
-      teacherPhoto: null,
-      teacherAddress: "",
-    });
+
+  const [teacherData, setTeacherData] = useState<IInstituteteacherPostData>({
+    courseId: "",
+    teacherName: "",
+    teacherEmail: "",
+    teacherExperience: "",
+    teacherPhoneNumber: "",
+    joinedDate: "",
+    salary: "",
+    teacherPhoto: null,
+    teacherAddress: "",
+    createdAt: "",
+  });
 
   // const input handle
   const handleChange = (
@@ -43,11 +51,14 @@ function AddTeacher() {
       alert("create teacher successfully!");
     }
   };
+  useEffect(() => {
+    dispatch(fetchInstituteCourse());
+  }, [dispatch]);
 
   return (
     <>
       <MainContainer title="Teacher Add">
-        {/* <p>This is teacher page!</p> */}
+        <p>This is teacher page!</p>
       </MainContainer>
       <div className="min-h-screen container mx-auto px-2 py-5">
         <div className="flex flex-col rounded-lg shadow overflow-hidden">
@@ -175,11 +186,16 @@ function AddTeacher() {
                     id="courseId"
                     className="block w-full px-3 py-2 border border-gray-300 bg-white text-gray-700 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   >
-                    <option value="">-- Select a course --</option>
-                    <option value="1">Web Development</option>
-                    <option value="2">Graphic Design</option>
-                    <option value="3">Data Science</option>
-                    {/* Add more options dynamically or manually */}
+                    <option disabled>-- Select a course --</option>
+                    {courses.length > 0 ? (
+                      courses.map((course) => (
+                        <option key={course.id} value={course.id}>
+                          {course.courseName}
+                        </option>
+                      ))
+                    ) : (
+                      <option disabled>Not Found Data</option>
+                    )}
                   </select>
                 </div>
               </div>

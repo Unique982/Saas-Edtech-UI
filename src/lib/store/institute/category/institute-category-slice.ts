@@ -43,6 +43,12 @@ const categorySlice = createSlice({
         state.data.splice(index, 1);
       }
     },
+    singleCategoryFetch(
+      state: ICategoryInitialData,
+      action: PayloadAction<ICategory[]>
+    ) {
+      state.data = action.payload;
+    },
   },
 });
 const { setStatus, setAddCategory, setFetchCategory, setDeleteCategory } =
@@ -92,6 +98,24 @@ export function deleteCategory(id: string) {
       if (response.status === 200) {
         dispatch(setDeleteCategory(id));
         dispatch(setStatus(Status.SUCCESS));
+      }
+    } catch (err) {
+      dispatch(setStatus(Status.ERROR));
+    }
+  };
+}
+
+// single category fetch
+export function singleCategory(id: string) {
+  return async function singleCategoryThunk(dispatch: AppDispatch) {
+    dispatch(setStatus(Status.LOADING));
+    try {
+      const response = await APIWITHTOKEN.get("institute/category/" + id);
+      if (response.status === 200) {
+        dispatch(response.data.data);
+        dispatch(setStatus(Status.SUCCESS));
+      } else {
+        dispatch(setStatus(Status.ERROR));
       }
     } catch (err) {
       dispatch(setStatus(Status.ERROR));

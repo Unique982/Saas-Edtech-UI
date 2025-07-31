@@ -1,6 +1,6 @@
 "use client";
 
-import MainContainer from "@/lib/components/dashboard/MainContnet";
+import MainContainer from "@/lib/components/dashboard/MainContent";
 import Modal from "@/lib/components/modal/Modal";
 
 import { useAppDispatch, useAppSelector } from "@/lib/store/hook";
@@ -9,6 +9,7 @@ import {
   fetchCategory,
 } from "@/lib/store/institute/category/institute-category-slice";
 import { ICategory } from "@/lib/store/institute/category/institute-category-type";
+import Link from "next/link";
 
 import { useEffect, useState } from "react";
 
@@ -176,7 +177,11 @@ export default function InstituteCategory() {
 
                         <td className="p-5">
                           <div className="flex items-center gap-1">
-                            <button className="p-2 rounded-full group transition-all duration-500 flex item-center">
+                            {/* View Button */}
+                            <Link
+                              href={`/institute/dashboard/category/${category.id}`}
+                              className="p-2 rounded-full group transition-all duration-500 flex item-center"
+                            >
                               <svg
                                 className="cursor-pointer"
                                 width={20}
@@ -191,9 +196,12 @@ export default function InstituteCategory() {
                                   fill="#34D399"
                                 />
                               </svg>
-                            </button>
-
-                            <button className="p-2 rounded-full group transition-all duration-500 flex item-center">
+                            </Link>
+                            {/* Edit Button */}
+                            <Link
+                              href={`/institute/category/${category.id}`}
+                              className="p-2 rounded-full group transition-all duration-500 flex item-center"
+                            >
                               <svg
                                 className="cursor-pointer"
                                 width={20}
@@ -208,7 +216,8 @@ export default function InstituteCategory() {
                                   fill="#818CF8"
                                 />
                               </svg>
-                            </button>
+                            </Link>
+                            {/* Delete Button */}
                             <button
                               onClick={() => handelCategoryDelete(category?.id)}
                               className="p-2 rounded-full group transition-all duration-500 flex item-center"

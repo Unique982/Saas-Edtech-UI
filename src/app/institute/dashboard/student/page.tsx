@@ -1,6 +1,18 @@
-import MainContainer from "@/lib/components/dashboard/MainContnet";
+"use client";
+import MainContainer from "@/lib/components/dashboard/MainContent";
+// import { useAppDispatch, useAppSelector } from "@/lib/store/hook";
+// import {
+//   IInstituteStudentInitialData,
+//   IStudentData,
+// } from "@/lib/store/institute/student/institute-student-type";
+// import { IInititalStudentData } from "@/lib/store/types";
 
 export default function InstituteStudent() {
+  //   const dispatch = useAppDispatch();
+  //   const { status } = useAppSelector<IInstituteStudentInitialData>(
+  //     (store) => store.instituteStudent
+  //   );
+
   return (
     <>
       <MainContainer title="Student Manage">

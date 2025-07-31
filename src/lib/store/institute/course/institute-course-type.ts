@@ -1,10 +1,12 @@
 import { Status } from "@/lib/types/type";
 
-export interface IInstituteCourseInitialDataCourse {
+export interface IInstituteCourseInitialDataCourse extends ICoursePostData {
   courseName: string;
   coursePrice: string;
   id: string;
+  createdAt: string;
 }
+
 export interface ICoursePostData {
   courseName: string;
   coursePrice: string;

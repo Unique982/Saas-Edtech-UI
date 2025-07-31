@@ -2,28 +2,30 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   IInstituteTeacherInitailData,
   IInstituteTeacherInitialDataTeacher,
+  IInstituteteacherPostData,
 } from "./institute-teacher-type";
 
 import { Status } from "@/lib/types/type";
 import { AppDispatch } from "../../store";
-import API from "@/lib/http";
+
 import APIWITHTOKEN from "@/lib/http/APIWITHTOKEN";
 const initailsState: IInstituteTeacherInitailData = {
-  teacher: {
-    course: {
-      courseName: "",
-      coursePrice: "",
-      courseThumbnail: "",
-    },
-    teacherEmail: "",
-    teacherExperience: "",
-    teacherPhoneNumber: "",
-    teacherName: "",
-    salary: "",
-    joinedDate: "",
-    teacherAddress: "",
-    teacherPhoto: null,
-  },
+  // teacher: {
+  //   course: {
+  //     courseName: "",
+  //     coursePrice: "",
+  //     courseThumbnail: "",
+  //   },
+  //   teacherEmail: "",
+  //   teacherExperience: "",
+  //   teacherPhoneNumber: "",
+  //   teacherName: "",
+  //   salary: "",
+  //   joinedDate: "",
+  //   teacherAddress: "",
+  //   teacherPhoto: null,
+  // },
+  teacher: [],
   status: Status.LOADING,
 };
 
@@ -39,36 +41,31 @@ const instituteTeacherSlice = createSlice({
     },
     setTeacher(
       state: IInstituteTeacherInitailData,
-      action: PayloadAction<IInstituteTeacherInitialDataTeacher>
+      action: PayloadAction<IInstituteTeacherInitialDataTeacher[]>
     ) {
       state.teacher = action.payload;
     },
     setFetchTeacher(
       state: IInstituteTeacherInitailData,
-      action: PayloadAction<IInstituteTeacherInitialDataTeacher>
+      action: PayloadAction<IInstituteTeacherInitialDataTeacher[]>
     ) {
       state.teacher = action.payload;
     },
-    //   setDeleteTeacher(
-    //     state,
-    //     action: PayloadAction<any>
-    //   ) {
-    //     const teacherId = action.payload.id;
-    //     const data = action.payload.data
-
-    //     const index = state.teacher.findIndex((teacher)=>teacher.id === teacherId);
-    //     if(index !== -1){
-    //       state.teacher[] = data;
-    //     }
+    setDeleteTeacherById(state, action: PayloadAction<any>) {
+      const index = state.teacher.findIndex(
+        (teacher) => teacher.id === action.payload
+      );
+      if (index !== -1) {
+        state.teacher.splice(index, 1);
+      }
+    },
   },
 });
-const { setStatus, setTeacher, setFetchTeacher } =
+const { setStatus, setTeacher, setFetchTeacher, setDeleteTeacherById } =
   instituteTeacherSlice.actions;
 export default instituteTeacherSlice.reducer;
 //create method
-export function createInstituteTeacher(
-  data: IInstituteTeacherInitialDataTeacher
-) {
+export function createInstituteTeacher(data: IInstituteteacherPostData) {
   return async function createInstituteTeacherThunk(dispatch: AppDispatch) {
     dispatch(setStatus(Status.LOADING));
     try {
@@ -111,15 +108,14 @@ export function fetchInstituteTeacher() {
 }
 
 // delete method
-export function deleteInstitiuteTeacher(id: string) {
+export function deleteInstitiuteTeacherById(id: string) {
   return async function deleteInstitiuteTeacherThunk(dispatch: AppDispatch) {
     dispatch(setStatus(Status.LOADING));
     try {
-      const response = await API.delete("institute/teacher" + id);
+      const response = await APIWITHTOKEN.delete("institute/teacher/" + id);
       if (response.status === 200) {
+        dispatch(setDeleteTeacherById(id));
         dispatch(setStatus(Status.SUCCESS));
-      } else {
-        dispatch(setStatus(Status.ERROR));
       }
     } catch (err) {
       console.log(err);

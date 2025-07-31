@@ -22,7 +22,10 @@ const instituteCourse = createSlice({
     setStatus(state, action: PayloadAction<Status>) {
       state.status = action.payload;
     },
-    setCourse(state, action: PayloadAction<any>) {
+    setCourse(
+      state,
+      action: PayloadAction<IInstituteCourseInitialDataCourse[]>
+    ) {
       state.courses = action.payload;
     },
     setFetchCourse(
@@ -31,12 +34,12 @@ const instituteCourse = createSlice({
     ) {
       state.courses = action.payload;
     },
-    setDeleteCourse(state, action: PayloadAction<string>) {
+    setDeleteCourseById(state, action: PayloadAction<string>) {
       const index = state.courses.findIndex(
         (course) => course.id == action.payload
       );
       if (index !== -1) {
-        state.courses.slice(index, 1);
+        state.courses.splice(index, 1);
       }
     },
     setEditCourse(state, action: PayloadAction<any>) {
@@ -49,8 +52,13 @@ const instituteCourse = createSlice({
     },
   },
 });
-const { setStatus, setCourse, setDeleteCourse, setEditCourse, setFetchCourse } =
-  instituteCourse.actions;
+const {
+  setStatus,
+  setCourse,
+  setDeleteCourseById,
+  setEditCourse,
+  setFetchCourse,
+} = instituteCourse.actions;
 export default instituteCourse.reducer;
 
 // create method
@@ -83,7 +91,7 @@ export function fetchInstituteCourse() {
       const response = await APIWITHTOKEN.get("institute/course");
       if (response.status === 200) {
         response.data.data.length > 0 &&
-          dispatch(setDeleteCourse(response.data.data));
+          dispatch(setFetchCourse(response.data.data));
         dispatch(setStatus(Status.SUCCESS));
       } else {
         dispatch(setStatus(Status.ERROR));
@@ -99,9 +107,9 @@ export function deleteInstituteCourse(id: string) {
   return async function deleteInstituteCourseThunk(dispatch: AppDispatch) {
     dispatch(setStatus(Status.LOADING));
     try {
-      const response = await API.delete("institute/course" + id);
+      const response = await APIWITHTOKEN.delete("institute/course/" + id);
       if (response.status === 200) {
-        dispatch(setDeleteCourse(id));
+        dispatch(setDeleteCourseById(id));
         dispatch(setStatus(Status.SUCCESS));
       } else {
         dispatch(setStatus(Status.ERROR));

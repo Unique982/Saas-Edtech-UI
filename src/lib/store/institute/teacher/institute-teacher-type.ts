@@ -1,17 +1,13 @@
 import { Status } from "@/lib/types/type";
 
-// export enum TeacherExpertise {
-//   Begineer = "begineer",
-//   Intermediate = "intermediate",
-//   Advance = "advance",
-// }
 export interface IInstituteTeacherInitialDataTeacherCourse {
+  id: string;
   courseName: string;
   coursePrice: string;
   courseThumbnail: string;
 }
-
-export interface IInstituteTeacherInitialDataTeacher {
+export interface IInstituteteacherPostData {
+  courseId: string;
   teacherName: string;
   teacherEmail: string;
   teacherPhoneNumber: string;
@@ -20,6 +16,11 @@ export interface IInstituteTeacherInitialDataTeacher {
   joinedDate: string;
   teacherAddress: string;
   teacherPhoto: File | null;
+  createdAt: string;
+}
+export interface IInstituteTeacherInitialDataTeacher
+  extends IInstituteteacherPostData {
+  id: string;
 }
 
 export interface IInitialTeacherDataWithCourse
@@ -27,6 +28,6 @@ export interface IInitialTeacherDataWithCourse
   course?: IInstituteTeacherInitialDataTeacherCourse;
 }
 export interface IInstituteTeacherInitailData {
-  teacher: IInitialTeacherDataWithCourse;
+  teacher: IInitialTeacherDataWithCourse[];
   status: Status;
 }

@@ -35,9 +35,16 @@ const instituteStudentSlice = createSlice({
     ) {
       state.instituteStudent = action.payload;
     },
+    fetchStudentData(
+      state: IInstituteStudentInitialData,
+      action: PayloadAction<IStudentData>
+    ) {
+      state.instituteStudent = action.payload;
+    },
   },
 });
-const { setStatus, setStudentAdd } = instituteStudentSlice.actions;
+const { setStatus, setStudentAdd, fetchStudentData } =
+  instituteStudentSlice.actions;
 export default instituteStudentSlice.reducer;
 
 // api call method here
@@ -47,6 +54,7 @@ export function fetchStudent() {
       const response = await APIWITHTOKEN.get("institute/student");
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
+        dispatch(fetchStudentData(response.data.data));
       } else {
         dispatch(setStatus(Status.ERROR));
       }
