@@ -13,7 +13,7 @@ import instituteCategorySlice from "./institute/category/institute-category-slic
 // institute course
 import instituteCourseSlice from "./institute/course/institute-course-slices";
 // institute student
-import instituteStudentSlice from "@/app/institute/dashboard/student/page";
+import instituteStudentSlice from "./institute/student/institute-student-slice";
 
 const store = configureStore({
   reducer: {

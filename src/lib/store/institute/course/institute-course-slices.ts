@@ -42,6 +42,14 @@ const instituteCourse = createSlice({
         state.courses.splice(index, 1);
       }
     },
+    singleCourse(state, action: PayloadAction<string>) {
+      const index = state.courses.findIndex(
+        (course) => course.id == action.payload
+      );
+      if (index !== -1) {
+        state.courses[index];
+      }
+    },
     setEditCourse(state, action: PayloadAction<any>) {
       const id = action.payload.id;
       const data = action.payload.data;
@@ -58,6 +66,7 @@ const {
   setDeleteCourseById,
   setEditCourse,
   setFetchCourse,
+  singleCourse,
 } = instituteCourse.actions;
 export default instituteCourse.reducer;
 
@@ -134,6 +143,24 @@ export function editInstituteCourse(id: string, data: any) {
       }
     } catch (err) {
       console.log(err);
+      dispatch(setStatus(Status.ERROR));
+    }
+  };
+}
+
+// single course details
+export function singleCourseDetails(id: string) {
+  return async function singleCourseDetailsThunk(dispatch: AppDispatch) {
+    dispatch(setStatus(Status.LOADING));
+    try {
+      const response = await APIWITHTOKEN.get("institute/course/" + id);
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+        response.data.data.length > 0 && dispatch(singleCourse(id));
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (err) {
       dispatch(setStatus(Status.ERROR));
     }
   };

@@ -43,16 +43,23 @@ const categorySlice = createSlice({
         state.data.splice(index, 1);
       }
     },
-    singleCategoryFetch(
-      state: ICategoryInitialData,
-      action: PayloadAction<ICategory[]>
-    ) {
-      state.data = action.payload;
+    singleCategoryFetch(state, action: PayloadAction<string>) {
+      const index = state.data.findIndex(
+        (category) => category.id == action.payload
+      );
+      if (index == -1) {
+        state.data[index];
+      }
     },
   },
 });
-const { setStatus, setAddCategory, setFetchCategory, setDeleteCategory } =
-  categorySlice.actions;
+const {
+  setStatus,
+  setAddCategory,
+  setFetchCategory,
+  setDeleteCategory,
+  singleCategoryFetch,
+} = categorySlice.actions;
 export default categorySlice.reducer;
 
 // api method call here
@@ -112,7 +119,7 @@ export function singleCategory(id: string) {
     try {
       const response = await APIWITHTOKEN.get("institute/category/" + id);
       if (response.status === 200) {
-        dispatch(response.data.data);
+        response.data.data.length > 0 && dispatch(singleCategoryFetch(id));
         dispatch(setStatus(Status.SUCCESS));
       } else {
         dispatch(setStatus(Status.ERROR));

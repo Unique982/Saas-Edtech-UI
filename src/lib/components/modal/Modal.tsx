@@ -1,7 +1,10 @@
 import { useAppDispatch, useAppSelector } from "@/lib/store/hook";
-import { createCategory } from "@/lib/store/institute/category/institute-category-slice";
+import {
+  createCategory,
+  fetchCategory,
+} from "@/lib/store/institute/category/institute-category-slice";
 import { ICategoryData } from "@/lib/store/institute/category/institute-category-type";
-
+import toast, { Toaster } from "react-hot-toast";
 import { Status } from "@/lib/types/type";
 import { ChangeEvent, useState } from "react";
 interface ICloseModal {
@@ -33,6 +36,7 @@ const Modal: React.FC<ICloseModal> = ({ closeModal }) => {
     await dispatch(createCategory(categoryData));
     if (status === Status.SUCCESS) {
       closeModal();
+      dispatch(fetchCategory());
     }
   };
 

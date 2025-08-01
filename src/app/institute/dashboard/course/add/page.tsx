@@ -58,7 +58,7 @@ export default function AddTeacher() {
   useEffect(() => {
     dispatch(fetchInstituteTeacher());
     if (teacher.length === 0) {
-      dispatch(fetchInstituteTeacher);
+      dispatch(fetchInstituteTeacher());
     }
   }, []);
   return (

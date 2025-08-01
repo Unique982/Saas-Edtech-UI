@@ -19,8 +19,13 @@ export default function InstituteTeacher() {
     dispatch(fetchInstituteTeacher());
   }, []);
   // search
-  let filterData = teacher.filter((teacher) =>
-    teacher.teacherName.toLowerCase().includes(searchedText.toLowerCase())
+  let filterData = teacher.filter(
+    (teacher) =>
+      teacher.teacherName.toLowerCase().includes(searchedText.toLowerCase()) ||
+      teacher.teacherPhoneNumber
+        .toLowerCase()
+        .includes(searchedText.toLowerCase()) ||
+      teacher.teacherEmail.toLowerCase().includes(searchedText.toLowerCase())
   );
   // deleet handel
   const deleteHandle = (id: string) => {
@@ -178,7 +183,11 @@ export default function InstituteTeacher() {
 
                           <td className="p-5">
                             <div className="flex items-center gap-1">
-                              <button className="p-2 rounded-full group transition-all duration-500 flex item-center">
+                              {/* view button */}
+                              <Link
+                                href={`/institute/dashboard/teacher/${teacher.id}`}
+                                className="p-2 rounded-full group transition-all duration-500 flex item-center"
+                              >
                                 <svg
                                   className="cursor-pointer"
                                   width={20}
@@ -193,7 +202,7 @@ export default function InstituteTeacher() {
                                     fill="#34D399"
                                   />
                                 </svg>
-                              </button>
+                              </Link>
 
                               <button className="p-2 rounded-full group transition-all duration-500 flex item-center">
                                 <svg

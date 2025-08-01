@@ -14,7 +14,7 @@ export default function SideBar() {
   // ];
   return (
     <>
-      <nav className="mt-5 px-2">
+      <nav className="mt-5 px-2  ">
         <Link
           href="/institute/dashboard"
           className="group flex items-center px-2 py-2 text-base font-medium rounded-md bg-indigo-100 text-indigo-700"
@@ -117,7 +117,7 @@ export default function SideBar() {
           Course
         </Link>
       </nav>
-      <div className="mt-auto  p-6 border-t ">
+      <div className="mt-auto  p-6 border-t  ">
         <div className="flex items-center">
           <img
             className="h-8 w-8 rounded-full"

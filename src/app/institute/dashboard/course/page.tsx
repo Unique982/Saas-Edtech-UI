@@ -184,7 +184,10 @@ export default function InstituteCourse() {
 
                           <td className="p-5">
                             <div className="flex items-center gap-1">
-                              <button className="p-2 rounded-full group transition-all duration-500 flex item-center">
+                              <Link
+                                href={`/institute/dashboard/course/${course.id}`}
+                                className="p-2 rounded-full group transition-all duration-500 flex item-center"
+                              >
                                 <svg
                                   className="cursor-pointer"
                                   width={20}
@@ -199,7 +202,7 @@ export default function InstituteCourse() {
                                     fill="#34D399"
                                   />
                                 </svg>
-                              </button>
+                              </Link>
 
                               <button className="p-2 rounded-full group transition-all duration-500 flex item-center">
                                 <svg
