@@ -1,7 +1,7 @@
 "use client";
 import MainContainer from "@/lib/components/dashboard/MainContent";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hook";
-import { singleCategory } from "@/lib/store/institute/category/institute-category-slice";
+
 import Link from "next/link";
 
 import { useParams } from "next/navigation";
@@ -13,11 +13,11 @@ export default function CategoryViewPage() {
   const { data } = useAppSelector((store) => store.instituteCategory);
   const { id } = useParams<{ id: string }>();
 
-  useEffect(() => {
-    if (id) {
-      dispatch(singleCategory(id));
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (id) {
+  //     dispatch(singleCategory(id));
+  //   }
+  // }, []);
 
   return (
     <>
@@ -43,12 +43,13 @@ export default function CategoryViewPage() {
                   </th>
                 </tr>
               </thead>
+
               <tbody className="bg-white">
                 <tr>
                   <td className="p-4 font-bold text-gray-600">
                     Category Name :
                   </td>
-                  <td className="p-4">Web Application Developer</td>
+                  <td className="p-4">web Developer</td>
                 </tr>
                 <tr className="bg-gray-50">
                   <td className="p-4 font-bold text-gray-600">

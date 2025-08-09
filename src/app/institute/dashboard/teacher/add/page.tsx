@@ -186,7 +186,9 @@ function AddTeacher() {
                     id="courseId"
                     className="block w-full px-3 py-2 border border-gray-300 bg-white text-gray-700 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   >
-                    <option disabled>-- Select a course --</option>
+                    <option disabled selected>
+                      -- Select a course --
+                    </option>
                     {courses.length > 0 ? (
                       courses.map((course) => (
                         <option key={course.id} value={course.id}>

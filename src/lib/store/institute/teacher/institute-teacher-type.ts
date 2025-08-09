@@ -6,7 +6,8 @@ export interface IInstituteTeacherInitialDataTeacherCourse {
   coursePrice: string;
   courseThumbnail: string;
 }
-export interface IInstituteteacherPostData {
+export interface IInstituteteacherPostData
+  extends IInstituteTeacherInitialDataTeacherCourse {
   courseId: string;
   teacherName: string;
   teacherEmail: string;

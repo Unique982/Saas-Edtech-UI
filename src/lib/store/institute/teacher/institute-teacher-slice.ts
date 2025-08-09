@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
+  IInitialTeacherDataWithCourse,
   IInstituteTeacherInitailData,
   IInstituteTeacherInitialDataTeacher,
   IInstituteteacherPostData,
@@ -59,10 +60,25 @@ const instituteTeacherSlice = createSlice({
         state.teacher.splice(index, 1);
       }
     },
+    fetchSingleTeacher(state, action: PayloadAction<any>) {
+      const id = action.payload;
+      const data = action.payload.data;
+      const index = state.teacher.findIndex(
+        (teacher) => teacher.id === action.payload
+      );
+      if (index !== -1) {
+        state.teacher[1] = data;
+      }
+    },
   },
 });
-const { setStatus, setTeacher, setFetchTeacher, setDeleteTeacherById } =
-  instituteTeacherSlice.actions;
+const {
+  setStatus,
+  setTeacher,
+  setFetchTeacher,
+  setDeleteTeacherById,
+  fetchSingleTeacher,
+} = instituteTeacherSlice.actions;
 export default instituteTeacherSlice.reducer;
 //create method
 export function createInstituteTeacher(data: IInstituteteacherPostData) {
@@ -119,6 +135,24 @@ export function deleteInstitiuteTeacherById(id: string) {
       }
     } catch (err) {
       console.log(err);
+      dispatch(setStatus(Status.ERROR));
+    }
+  };
+}
+
+// single teacher
+export function singleTeacherFetch(id: string) {
+  return async function singleTeacherFetchThunk(dispatch: AppDispatch) {
+    try {
+      const response = await APIWITHTOKEN.get("institute/teacher/" + id);
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+        response.data.data.length &&
+          dispatch(fetchSingleTeacher(response.data.data));
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (err) {
       dispatch(setStatus(Status.ERROR));
     }
   };

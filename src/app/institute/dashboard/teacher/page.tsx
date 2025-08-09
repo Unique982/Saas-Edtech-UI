@@ -141,6 +141,13 @@ export default function InstituteTeacher() {
                     scope="col"
                     className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
+                    Course
+                  </th>
+
+                  <th
+                    scope="col"
+                    className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                  >
                     Created At
                   </th>
                   <th
@@ -174,6 +181,9 @@ export default function InstituteTeacher() {
                           </td>
                           <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
                             {teacher.teacherAddress}
+                          </td>
+                          <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {teacher.courseName}
                           </td>
                           <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
                             {new Date(teacher.createdAt.toString())

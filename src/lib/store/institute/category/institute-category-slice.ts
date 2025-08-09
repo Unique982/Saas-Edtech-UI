@@ -9,6 +9,7 @@ import { AppDispatch } from "../../store";
 import APIWITHTOKEN from "@/lib/http/APIWITHTOKEN";
 const initialState: ICategoryInitialData = {
   data: [],
+
   status: Status.LOADING,
 };
 
@@ -43,23 +44,18 @@ const categorySlice = createSlice({
         state.data.splice(index, 1);
       }
     },
-    singleCategoryFetch(state, action: PayloadAction<string>) {
-      const index = state.data.findIndex(
-        (category) => category.id == action.payload
-      );
-      if (index == -1) {
-        state.data[index];
-      }
-    },
+    // singleCategoryFetch(state, action: PayloadAction<any>) {
+    //   const index = state.data.findIndex(
+    //     (category) => category.id == action.payload
+    //   );
+    //   if (index == -1) {
+    //     state.data[index];
+    //   }
+    // },
   },
 });
-const {
-  setStatus,
-  setAddCategory,
-  setFetchCategory,
-  setDeleteCategory,
-  singleCategoryFetch,
-} = categorySlice.actions;
+const { setStatus, setAddCategory, setFetchCategory, setDeleteCategory } =
+  categorySlice.actions;
 export default categorySlice.reducer;
 
 // api method call here
@@ -112,20 +108,21 @@ export function deleteCategory(id: string) {
   };
 }
 
-// single category fetch
-export function singleCategory(id: string) {
-  return async function singleCategoryThunk(dispatch: AppDispatch) {
-    dispatch(setStatus(Status.LOADING));
-    try {
-      const response = await APIWITHTOKEN.get("institute/category/" + id);
-      if (response.status === 200) {
-        response.data.data.length > 0 && dispatch(singleCategoryFetch(id));
-        dispatch(setStatus(Status.SUCCESS));
-      } else {
-        dispatch(setStatus(Status.ERROR));
-      }
-    } catch (err) {
-      dispatch(setStatus(Status.ERROR));
-    }
-  };
-}
+// // single category fetch
+// export function singleCategory(id: string) {
+//   return async function singleCategoryThunk(dispatch: AppDispatch) {
+//     dispatch(setStatus(Status.LOADING));
+//     try {
+//       const response = await APIWITHTOKEN.get("institute/category/" + id);
+//       if (response.status === 200) {
+//         response.data.data.length > 0 &&
+//           dispatch(singleCategoryFetch(response.data.data));
+//         dispatch(setStatus(Status.SUCCESS));
+//       } else {
+//         dispatch(setStatus(Status.ERROR));
+//       }
+//     } catch (err) {
+//       dispatch(setStatus(Status.ERROR));
+//     }
+//   };
+// }
