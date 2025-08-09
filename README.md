@@ -14,6 +14,20 @@ This is the frontend repository for our modern SaaS (Software as a Service) appl
 | **Axios / Fetch** | For making API calls to backend       |
 | **Context / Redux (Optional)** | State management         |
 
+--- 
+##  Project Repositories
+The SaaS frontend is split into multiple repositories for better modularity and role-based separation:
+- ### [Institute Frontend Repository](https://github.com/Unique982/Saas-Edtech-Ui-Clinet-Institute.git)  
+  Contains UI and features specific to the Institute role, including institute dashboards, course management, and other institute-related interfaces.
+  
+- ### [Teacher Frontend Repository](https://github.com/Unique982/Saas-EdTech-Ui-Clinet-Teacher.git)  
+  Dedicated repository for teacher-related UI, including lesson planning, student evaluations, and teacher dashboards.
+
+- ### [Student Frontend Repository](https://github.com/Unique982/Saas-Edtech-Student)  
+  Handles student-facing UI such as course enrollment, progress tracking, and student dashboards.
+
+You can find and contribute to each role-based repository individually.
+
 ---
 
 ## 🔑 Environment Variables
