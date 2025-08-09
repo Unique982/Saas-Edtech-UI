@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 SaaS Platform Frontend
 
-## Getting Started
+This is the frontend repository for our modern SaaS (Software as a Service) application. It is built using **Next.js** with **TypeScript** and **TailwindCSS**. This frontend interfaces with the backend API to handle user interaction, dashboards, and client-side logic for different roles like Admin, Institute, Teacher, and Student.
 
-First, run the development server:
+---
 
+## ⚙️ Tech Stack
+
+| Tech        | Description                                  |
+|-------------|----------------------------------------------|
+| **Next.js** | Full-stack React framework                   |
+| **TypeScript** | Type-safe React development              |
+| **TailwindCSS** | Utility-first CSS framework             |
+| **Axios / Fetch** | For making API calls to backend       |
+| **Context / Redux (Optional)** | State management         |
+
+---
+
+## 🔑 Environment Variables
+
+Create a `.env` file in the root and add the following:
+
+```env
+NEXT_PUBLIC_API_BASE_URL=http://localhost:4000
+```
+### 1. Clone the repository
+```bash
+git clone https://github.com/yourusername/saas-frontend.git
+cd saas-frontend
+```
+### 2. Install dependencies
+```bashnpm install
+# or
+yarn install
+```
+### 3. Run the development server
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+###🔮 Features
+```bash
+🔐 Authentication UI (Login, Register)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+📊 Dynamic Dashboards
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Admin Dashboard
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Institute Dashboard
 
-## Learn More
+Teacher Dashboard
 
-To learn more about Next.js, take a look at the following resources:
+Student Dashboard
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+📦 Subscription Management Interface
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+🧾 Course Listings & Enrollment
 
-## Deploy on Vercel
+🎓 Student Progress View
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+💳 Payment UI (Khalti/eSewa integration)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🌐 Responsive UI using TailwindCSS
+
+🧩 API Integration with Backend
+```
+### 📞 Call Me & Contact Me
+```bash
+If this project meets your requirements and you want to discuss or use it:
+📱 Call Me: +977-9864728224
+📧 Email: uniqueneupane153@gmail.com
+🌐 Portfolio/Website: www.khemrajneupane.com.np
+🔗 GitHub: https://github.com/Unique982/Saas-Edtech-Frontend.git
+Feel free to reach out for collaboration, customization, or deployment support.
+```
+---
+
+## ⚠️ Notice
+
+🚧 **This project is currently in active development phase.**  
+Features are still being implemented and some APIs/UI may change.  
+Use it for testing, development, and feedback purposes only.
+
+If you want to contribute or report issues, please feel free to contact me.
+---
+
